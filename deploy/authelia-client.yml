@@ -1,0 +1,32 @@
+# Add under identity_providers.oidc.clients in Authelia's configuration.
+#
+# Generate the secret pair with:
+#   authelia crypto hash generate pbkdf2 --variant sha512 --random --random.length 72 --random.charset rfc3986
+# Put the printed "Random Password" in /etc/bc-mcp/oidc-client-secret (mode 0640, group bc-mcp)
+# and the printed "Digest" below.
+identity_providers:
+  oidc:
+    clients:
+      - client_id: 'bc-mcp'
+        client_name: 'Beancount ledger (bc-mcp)'
+        client_secret: '$pbkdf2-sha512$310000$REPLACE_WITH_DIGEST'
+        public: false
+        authorization_policy: 'two_factor'
+        require_pkce: true
+        pkce_challenge_method: 'S256'
+        redirect_uris:
+          - 'https://ledger.example.com/oauth/callback'
+        scopes:
+          - 'openid'
+          - 'profile'
+          - 'email'
+          - 'groups'
+        grant_types:
+          - 'authorization_code'
+        response_types:
+          - 'code'
+        token_endpoint_auth_method: 'client_secret_basic'
+        # bc-mcp asks for consent itself and names the app that is really connecting, which
+        # Authelia's page can't, so Authelia's own consent step is skipped.
+        consent_mode: 'implicit'
+        userinfo_signed_response_alg: 'none'

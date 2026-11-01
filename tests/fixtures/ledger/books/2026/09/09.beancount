@@ -1,0 +1,36 @@
+;; -*- mode: beancount -*-
+
+2026-09-01 * "Opening balances"
+  Assets:Bank:Acme:Checking             3000.00 USD
+  Assets:Bank:Acme:Savings               100.00 USD
+  Equity:Opening-Balances
+
+2026-09-01 * "Opening balances"
+  Assets:Bank:Jade:Euro                  800.00 EUR
+  Equity:Opening-Balances
+
+2026-09-01 * "Landlord" "September rent"
+  Expenses:Housing:Rent                 1500.00 USD
+  Assets:Bank:Acme:Checking
+
+2026-09-10 * "Fresh Mart" "Grocery"
+  Expenses:Food:Groceries                 62.30 USD
+  Liabilities:CreditCard:Acme:Gold
+
+2026-09-15 * "Employer" "Paycheck"
+  Assets:Bank:Acme:Checking             2500.00 USD
+  Income:Salary
+
+2026-09-20 * "Noodle House" "Dining"
+  Expenses:Food:Dining                    18.40 USD
+  Liabilities:CreditCard:Acme:Gold
+
+2026-09-28 * "SearchCo" "Search plan"
+  Expenses:Subscriptions                  10.00 USD
+  Liabilities:CreditCard:Acme:Blue
+
+2026-09-30 * "Acme Bank" "Transfer to savings"
+  Assets:Bank:Acme:Savings                12.50 USD
+  Assets:Bank:Acme:Checking
+
+2026-09-30 price EUR 1.08 USD

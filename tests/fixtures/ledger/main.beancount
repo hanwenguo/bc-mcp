@@ -1,0 +1,10 @@
+;; -*- mode: beancount -*-
+; Mock ledger for bc-mcp's tests. Every name and number in it is made up.
+option "title" "Test Ledger"
+option "operating_currency" "USD"
+option "operating_currency" "EUR"
+
+2026-01-01 custom "fava-option" "language" "en"
+
+include "accounts.beancount"
+include "books/2026/2026.beancount"

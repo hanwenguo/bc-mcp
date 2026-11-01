@@ -1,0 +1,56 @@
+;; -*- mode: beancount -*-
+
+; Statement balances
+2026-10-01 balance Liabilities:CreditCard:Acme:Blue -10.00 USD
+
+; Reconcile to balances observed on October 1
+2026-10-01 * "Acme Bank" "Transfer to savings" ^recon-20261001
+  Assets:Bank:Acme:Savings                20.00 USD
+  Assets:Bank:Acme:Checking
+
+2026-10-01 * "Landlord" "October rent"
+  Expenses:Housing:Rent                 1500.00 USD
+  Assets:Bank:Acme:Checking
+
+2026-10-02 balance Assets:Bank:Acme:Savings 132.50 USD
+
+2026-10-05 * "Fresh Mart" "Grocery"
+  Expenses:Food:Groceries                 54.12 USD
+  Liabilities:CreditCard:Acme:Gold
+
+2026-10-12 * "Noodle House" "Dining" #weekend
+  Expenses:Food:Dining                    23.50 USD
+  Liabilities:CreditCard:Acme:Gold
+
+2026-10-15 * "Employer" "Paycheck"
+  Assets:Bank:Acme:Checking             2500.00 USD
+  Income:Salary
+
+; Reconcile to balances observed on October 23
+2026-10-23 * "Acme Bank" "Transfer to savings" ^recon-20261023
+  Assets:Bank:Acme:Savings                 5.00 USD
+  Assets:Bank:Acme:Checking
+
+2026-10-27 * "Fresh Mart" "Grocery"
+  Expenses:Food:Groceries                 31.07 USD
+  Liabilities:CreditCard:Acme:Gold
+
+2026-10-28 * "SearchCo" "Search plan"
+  Expenses:Subscriptions                  10.00 USD
+  Liabilities:CreditCard:Acme:Blue
+
+2026-10-29 * "Noodle House" "Dining"
+  Expenses:Food:Dining                    11.71 USD
+  Liabilities:CreditCard:Acme:Gold
+
+2026-10-30 ! "Corner Store" "Snacks"
+  Expenses:Food:Snacks                     4.25 USD
+  Liabilities:CreditCard:Acme:Gold
+
+2026-10-31 * "Corner Cafe" "Brunch"
+  Expenses:Food:Dining                     9.00 USD
+  Liabilities:CreditCard:Acme:Gold
+
+2026-10-31 * "PhoneCo" "Device protection"
+  Expenses:Phone                          13.99 USD
+  Liabilities:CreditCard:Acme:Blue

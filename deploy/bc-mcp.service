@@ -1,0 +1,51 @@
+[Unit]
+Description=bc-mcp: MCP server for the Beancount ledger
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# Run as the user that owns the ledger: writes replace files, so whoever writes owns them.
+# Create it with: useradd --system --home-dir /var/lib/bc-mcp --shell /usr/sbin/nologin bc-mcp
+User=bc-mcp
+Group=bc-mcp
+WorkingDirectory=/opt/bc-mcp
+ExecStart=/opt/bc-mcp/.venv/bin/bc-mcp serve --config /etc/bc-mcp/config.toml
+Restart=on-failure
+RestartSec=2
+
+# OAuth state (clients, tokens) lives in /var/lib/bc-mcp; set [auth] state_dir to match.
+StateDirectory=bc-mcp
+StateDirectoryMode=0700
+
+# Hardening: the filesystem is read-only except the ledger and the state directory, and /home is
+# hidden. Keep ReadWritePaths in step with [ledger] root.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/ledger
+PrivateTmp=true
+PrivateDevices=true
+PrivateIPC=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+ProtectProc=invisible
+RestrictSUIDSGID=true
+RestrictNamespaces=true
+RestrictRealtime=true
+LockPersonality=true
+CapabilityBoundingSet=
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallFilter=~@privileged
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+UMask=0027
+# Bounds a runaway request; the ledger itself needs far less.
+MemoryMax=1G
+TasksMax=128
+
+[Install]
+WantedBy=multi-user.target

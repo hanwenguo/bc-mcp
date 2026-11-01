@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+# A real ledger kept here for local runs is personal data and its own git repo. Tests use
+# tests/fixtures/ledger instead.
+/ledger/
+.DS_Store
+result
+result-*

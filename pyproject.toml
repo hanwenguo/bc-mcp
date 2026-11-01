@@ -1,0 +1,35 @@
+[project]
+name = "bc-mcp"
+version = "0.1.0"
+description = "Remote MCP server that serves a Beancount ledger directory to agents"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "mcp>=2.3,<3",
+    "beancount>=3.2,<4",
+    "beanquery>=0.2,<0.3",
+    "httpx2>=2.16",
+    "pyjwt[crypto]>=2.10",
+    "uvicorn>=0.30",
+]
+
+[project.scripts]
+bc-mcp = "bc_mcp.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["uv_build>=0.8,<1"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "I"]
+ignore = ["E501", "B905"]

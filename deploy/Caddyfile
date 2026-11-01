@@ -1,0 +1,11 @@
+# TLS termination for bc-mcp. Do not put Authelia forward_auth on this site:
+# MCP clients can't complete a browser login there, and bc-mcp does its own auth
+# (bearer tokens, plus OAuth whose login step goes to Authelia).
+ledger.example.com {
+	# bc-mcp caps its own bodies too; this stops oversized uploads at the edge.
+	request_body {
+		max_size 5MB
+	}
+	encode gzip
+	reverse_proxy 127.0.0.1:8765
+}

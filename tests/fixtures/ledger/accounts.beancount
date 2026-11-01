@@ -1,0 +1,25 @@
+;; -*- mode: beancount -*-
+
+; Assets
+2026-08-31 open Assets:Bank:Acme:Checking USD
+2026-08-31 open Assets:Bank:Acme:Savings USD
+2026-08-31 open Assets:Bank:Jade:Euro EUR
+
+; Liabilities
+2026-08-31 open Liabilities:CreditCard:Acme:Gold USD
+2026-08-31 open Liabilities:CreditCard:Acme:Blue USD
+
+; Income
+2026-08-31 open Income:Salary USD
+
+; Expenses
+2026-08-31 open Expenses:Food:Dining USD
+2026-08-31 open Expenses:Food:Groceries USD
+2026-08-31 open Expenses:Food:Snacks USD
+2026-08-31 open Expenses:Housing:Rent USD
+2026-08-31 open Expenses:Misc USD
+2026-08-31 open Expenses:Phone USD
+2026-08-31 open Expenses:Subscriptions USD
+
+; Equity
+2026-08-31 open Equity:Opening-Balances

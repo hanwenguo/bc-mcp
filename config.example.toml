@@ -1,0 +1,65 @@
+# bc-mcp configuration. Relative paths are resolved from this file's directory.
+
+[ledger]
+# A git repository, owned by the user bc-mcp runs as.
+root = "/var/lib/ledger"
+main = "main.beancount"
+# Served to every agent as the MCP server instructions (your bookkeeping policy).
+instructions = "README.md"
+
+[ledger.layout]
+# Where new entries are filed. These defaults match books/YYYY/MM/MM.beancount + books/YYYY/YYYY.beancount.
+dated_file = "books/{year}/{month:02d}/{month:02d}.beancount"
+year_index = "books/{year}/{year}.beancount"
+accounts_file = "accounts.beancount"
+amount_column = 47
+
+[git]
+# Commit every accepted write to the ledger's git repository.
+enabled = true
+author_name = "bc-mcp"
+author_email = "bc-mcp@localhost"
+
+[server]
+host = "127.0.0.1"
+port = 8765
+path = "/mcp"
+# The public origin, as reached through your reverse proxy. Required for OAuth.
+public_url = "https://ledger.example.com"
+# Browser-based MCP clients must be listed here; server-to-server clients send no Origin and are fine.
+allowed_origins = []
+
+[auth]
+# OAuth clients, codes and tokens (SQLite). Only needed with [auth.oidc].
+state_dir = "/var/lib/bc-mcp"
+access_token_ttl = 3600
+refresh_token_ttl = 2592000
+# Connected apps must log in again after this, however often they refresh (90 days).
+grant_ttl = 7776000
+# Where OAuth apps may send the browser back after consent (URL prefixes). Loopback addresses
+# (Claude Code, other local tools) are always allowed. Registration with anything else is refused.
+allowed_redirects = [
+  "https://claude.ai/",
+  "https://claude.com/",
+  "https://chatgpt.com/connector/oauth/",
+  "https://chatgpt.com/connector_platform_oauth_redirect",
+]
+
+# Static bearer tokens for agents you configure yourself (Claude Code, scripts, ...).
+# Generate one with: bc-mcp token --name claude-code --scopes read,write
+[[auth.tokens]]
+name = "claude-code"
+sha256 = "0000000000000000000000000000000000000000000000000000000000000000"
+scopes = ["ledger:read", "ledger:write"]
+
+# OAuth for connectors such as claude.ai and ChatGPT: the login is delegated to your OIDC provider
+# (for example Authelia).
+[auth.oidc]
+issuer = "https://auth.example.com"
+client_id = "bc-mcp"
+# Or set BC_MCP_OIDC_CLIENT_SECRET in the environment.
+client_secret_file = "/etc/bc-mcp/oidc-client-secret"
+# Who may log in: matched against preferred_username, and against the groups claim.
+allowed_users = ["alice"]
+allowed_groups = []
+scopes = ["openid", "profile", "email", "groups"]

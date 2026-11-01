@@ -1,0 +1,4 @@
+;; -*- mode: beancount -*-
+
+include "09/09.beancount"
+include "10/10.beancount"
